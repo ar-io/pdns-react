@@ -1,0 +1,13 @@
+{
+    "balances": {
+      "TId0Wix2KFl1gArtAT6Do1CbWU_0wneGvS5X9BfW5PE": 1
+    },
+    "controller": "TId0Wix2KFl1gArtAT6Do1CbWU_0wneGvS5X9BfW5PE",
+    "evolve": null,
+    "name": "wallet",
+    "owner": "TId0Wix2KFl1gArtAT6Do1CbWU_0wneGvS5X9BfW5PE",
+    "records": {
+      "@": "VuMf-IFLPZ8iqW_tt30jD9zoU3vAUpcPPs5bEXTzNp8"
+    },
+    "ticker": "ANT-WALLET"
+  }
