@@ -1,0 +1,17 @@
+{
+    "balances":{
+    "QGWqtJdLLgm2ehFWiiPzMaoFLD50CnGuzZIPEdoDRGQ":1
+    },
+    "controller":"",
+    "evolve":null,
+    "name":"Arweave Name Token Source Contract v0.1.7",
+    "owner":"QGWqtJdLLgm2ehFWiiPzMaoFLD50CnGuzZIPEdoDRGQ",
+    "records":{
+    "@":{
+    "transactionId":"",
+    "ttlSeconds":900
+    }
+    },
+    "ticker":"ANT-SOURCE",
+    "version":"0.1.7"
+}
