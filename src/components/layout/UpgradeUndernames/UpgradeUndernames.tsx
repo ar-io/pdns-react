@@ -29,15 +29,18 @@ function UpgradeUndernames() {
   const name = location.pathname.split('/').at(-2);
   const [, dispatchTransactionState] = useTransactionState();
   const [newUndernameCount, setNewUndernameCount] = useState<number>(0);
-  const {
-    data: { arnsRecord: record, antProcess: antContract, undernameCount },
-  } = useDomainInfo({ domain: name });
+  const { data: domainData } = useDomainInfo({ domain: name });
+
   const { data: fee } = useIncreaseUndernameCost({
     name: lowerCaseDomain(name ?? ''),
     quantity: newUndernameCount,
   });
-
-  if (!record || !antContract || !name) {
+  const {
+    arnsRecord,
+    antProcess: antContract,
+    undernameCount,
+  } = domainData ?? {};
+  if (!arnsRecord || !antContract || !name) {
     return (
       <div className="page center">
         <Loader size={80} message="Loading domain record" />
@@ -69,7 +72,7 @@ function UpgradeUndernames() {
               style={{ gap: '8px', whiteSpace: 'nowrap' }}
             >
               Total Undernames:{' '}
-              <span className="white">{record.undernameLimit}</span>
+              <span className="white">{arnsRecord.undernameLimit}</span>
               <span className="flex add-box center" style={{}}>
                 +{newUndernameCount}
               </span>
@@ -80,7 +83,7 @@ function UpgradeUndernames() {
             </span>
           </div>
           <Counter
-            maxValue={MAX_UNDERNAME_COUNT - record.undernameLimit}
+            maxValue={MAX_UNDERNAME_COUNT - arnsRecord.undernameLimit}
             minValue={0}
             value={newUndernameCount}
             setValue={setNewUndernameCount}
@@ -149,8 +152,8 @@ function UpgradeUndernames() {
                   const increaseUndernamePayload: IncreaseUndernamesPayload = {
                     name: lowerCaseDomain(name),
                     qty: newUndernameCount,
-                    oldQty: record.undernameLimit,
-                    processId: record.processId,
+                    oldQty: arnsRecord.undernameLimit,
+                    processId: arnsRecord.processId,
                   };
                   dispatchTransactionState({
                     type: 'setTransactionData',
