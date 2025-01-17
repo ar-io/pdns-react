@@ -108,14 +108,14 @@
     plimit-lit "^3.0.1"
     warp-contracts "1.4.45"
 
-"@ar.io/sdk@^3.2.0-alpha.3":
-  version "3.2.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@ar.io/sdk/-/sdk-3.2.0-alpha.3.tgz#da58d0f474fcd82f007b6de69aec66862a868afb"
-  integrity sha512-bp+vQB3cDq1zf/QK9xnX7PPHMKyZMgsM3JD1H7IURvQAsdZuS0X2u4C6DPJyVWEihNk6XFioq0X+Xjnl41cjQQ==
+"@ar.io/sdk@^3.3.0-alpha.11":
+  version "3.3.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@ar.io/sdk/-/sdk-3.3.0-alpha.11.tgz#4ecb67a7f869d989b46b24d7922e119cfef9577e"
+  integrity sha512-hxMTRQtW0ZXIUjRDKrbbtdMD8KxcPhH46BRShc8KteVPkv6BUrWfvfIdx8Lu08QQmWnVpC2xFdq3FqexpC3N5g==
   dependencies:
     "@dha-team/arbundles" "^1.0.1"
     "@permaweb/aoconnect" "^0.0.57"
-    arweave "1.14.4"
+    arweave "1.15.5"
     axios "1.7.9"
     axios-retry "^4.3.0"
     commander "^12.1.0"
@@ -5909,6 +5909,16 @@ arweave@1.14.4:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.14.4.tgz#5ba22136aa0e7fd9495258a3931fb770c9d6bf21"
   integrity sha512-tmqU9fug8XAmFETYwgUhLaD3WKav5DaM4p1vgJpEj/Px2ORPPMikwnSySlFymmL2qgRh2ZBcZsg11+RXPPGLsA==
+  dependencies:
+    arconnect "^0.4.2"
+    asn1.js "^5.4.1"
+    base64-js "^1.5.1"
+    bignumber.js "^9.0.2"
+
+arweave@1.15.5:
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.15.5.tgz#d0fb209de01bfc9dc97d5da70270928a83ecee83"
+  integrity sha512-Zj3b8juz1ZtDaQDPQlzWyk2I4wZPx3RmcGq8pVJeZXl2Tjw0WRy5ueHPelxZtBLqCirGoZxZEAFRs6SZUSCBjg==
   dependencies:
     arconnect "^0.4.2"
     asn1.js "^5.4.1"

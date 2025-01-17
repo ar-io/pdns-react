@@ -138,7 +138,7 @@ export default async function dispatchANTInteraction({
         });
         dispatchSigningMessage('Verifying Release, please wait...');
         const released = await arioContract
-          .getArNSRecord({ name })
+          .getArNSRecord({ name: payload.name })
           .catch((e: Error) => e);
 
         if (released instanceof Error) {

@@ -19,7 +19,7 @@ import {
   ContractInteraction,
 } from '@src/types';
 import { createAntStateForOwner, lowerCaseDomain, sleep } from '@src/utils';
-import { DEFAULT_ANT_LUA_ID, WRITE_OPTIONS } from '@src/utils/constants';
+import { WRITE_OPTIONS } from '@src/utils/constants';
 import eventEmitter from '@src/utils/events';
 import { Dispatch } from 'react';
 
@@ -77,7 +77,6 @@ export default async function dispatchArIOInteraction({
             signer: createAoSigner(signer),
             ao: ao,
             scheduler: scheduler,
-            luaCodeTxId: DEFAULT_ANT_LUA_ID,
           });
 
           const antRegistry = ANTRegistry.init({
