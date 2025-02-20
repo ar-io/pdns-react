@@ -68,37 +68,55 @@ export function RNPChart({
         const startPrice =
           costDetails.returnedNameDetails.basePrice * START_RNP_PREMIUM;
         const endPrice = costDetails.returnedNameDetails.basePrice;
+        const currentPrice = costDetails.tokenCost;
+
         const startTimestamp = costDetails.returnedNameDetails.startTimestamp;
         const endTimestamp = costDetails.returnedNameDetails.endTimestamp;
-        const pricePointCount = 14;
+        const totalPoints = 500;
 
-        const newChartData: ChartData = new Array(pricePointCount)
-          .fill(true)
-          .map((_, i) => {
-            const timestamp =
-              startTimestamp +
-              ((endTimestamp - startTimestamp) / (pricePointCount - 1)) * i;
+        // Ensure the current timestamp is within bounds
+        const currentTimestamp = Math.min(
+          Math.max(Date.now(), startTimestamp),
+          endTimestamp,
+        );
 
-            const percentageOfPeriodPassed =
-              (timestamp - startTimestamp) / (endTimestamp - startTimestamp);
-            const price =
-              startPrice + percentageOfPeriodPassed * (endPrice - startPrice);
+        // Determine the split ratio based on where `currentTimestamp` falls
+        const percentagePassed =
+          (currentTimestamp - startTimestamp) / (endTimestamp - startTimestamp);
+        const beforeCount = Math.round(totalPoints * percentagePassed);
+        const afterCount = totalPoints - beforeCount;
 
-            return {
-              price: Math.round(price),
-              timestamp,
-            };
-          });
+        const beforePoints = new Array(beforeCount).fill(true).map((_, i) => {
+          const timestamp =
+            startTimestamp +
+            ((currentTimestamp - startTimestamp) / (beforeCount - 1 || 1)) * i;
 
+          const percent =
+            (timestamp - startTimestamp) /
+            (currentTimestamp - startTimestamp || 1);
+          const price = startPrice + percent * (currentPrice - startPrice);
+
+          return { price: Math.round(price), timestamp };
+        });
+
+        const afterPoints = new Array(afterCount).fill(true).map((_, i) => {
+          const timestamp =
+            currentTimestamp +
+            ((endTimestamp - currentTimestamp) / (afterCount - 1 || 1)) * i;
+
+          const percent =
+            (timestamp - currentTimestamp) /
+            (endTimestamp - currentTimestamp || 1);
+          const price = currentPrice + percent * (endPrice - currentPrice);
+
+          return { price: Math.round(price), timestamp };
+        });
+
+        // Combine the segments and ensure correct ordering
         setChartData(
-          [
-            ...newChartData,
-            // Add the current price for tooltip orientation on default position
-            {
-              timestamp: Date.now(),
-              price: costDetails.tokenCost,
-            },
-          ].sort((a, b) => a.timestamp - b.timestamp),
+          [...beforePoints, ...afterPoints].sort(
+            (a, b) => a.timestamp - b.timestamp,
+          ),
         );
         return;
       }
