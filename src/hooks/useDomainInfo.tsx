@@ -17,6 +17,7 @@ import { useWalletState } from '@src/state/contexts/WalletState';
 import { ArNSWalletConnector } from '@src/types';
 import { jsonSerialize } from '@src/utils';
 import { NETWORK_DEFAULTS } from '@src/utils/constants';
+import { ARNS_APP_DB, getAoANTInfo } from '@src/utils/db';
 import { ANTStateError, UpgradeRequiredError } from '@src/utils/errors';
 import {
   buildAntStateQuery,
@@ -158,9 +159,17 @@ export function buildDomainInfoQuery({
               errors.push(new UpgradeRequiredError(`Affected APIs: ${action}`));
             }
 
-            const info = await ANT.init({
-              process: new AOProcess({ processId, ao: antAo }),
-            }).getInfo();
+            // const info = await ANT.init({
+            //   process: new AOProcess({ processId, ao: antAo }),
+            // }).getInfo();
+
+            const info = await getAoANTInfo(
+              ARNS_APP_DB,
+              antAo,
+              processId,
+              true,
+            );
+
             if (errors.length) info.Handlers = []; // for validation on api's, in order to update ant
             return info;
           } catch (error: any) {

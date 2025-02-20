@@ -1,6 +1,4 @@
 import {
-  ANT,
-  AOProcess,
   AoANTState,
   AoARIORead,
   AoArNSNameData,
@@ -18,6 +16,7 @@ import {
 import { del, get, set } from 'idb-keyval';
 
 import { isArweaveTransactionID } from '.';
+import { ARNS_APP_DB, getAoANTState } from './db';
 
 /**
  * Creates an Indexed DB persister
@@ -64,8 +63,9 @@ export function buildAntStateQuery({
       if (!processId || !isArweaveTransactionID(processId))
         throw new Error('Must provide a valid process id');
 
-      const ant = ANT.init({ process: new AOProcess({ processId, ao }) });
-      return await ant.getState();
+      // const ant = ANT.init({ process: new AOProcess({ processId, ao }) });
+      // return await ant.getState();
+      return await getAoANTState(ARNS_APP_DB, ao, processId, true);
     },
     staleTime: Infinity,
   };
