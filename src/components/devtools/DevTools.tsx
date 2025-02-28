@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 import DialogModal from '../modals/DialogModal/DialogModal';
 import ArNSRegistrySettings from './ArNSRegistrySettings';
@@ -7,8 +7,17 @@ import TransferIO from './TransferIO';
 import UserAddress from './UserAddress';
 import './styles.css';
 
+const ReactQueryDevtoolsProduction = React.lazy(() =>
+  import('@tanstack/react-query-devtools/build/modern/production.js').then(
+    (d) => ({
+      default: d.ReactQueryDevtools,
+    }),
+  ),
+) as any;
+
 const DevTools = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showTanstackTools, setShowTanstackTools] = useState(false);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -43,8 +52,8 @@ const DevTools = () => {
 
                   lineHeight: '1.5',
                   fontWeight: 160,
-                  width: '600px',
-                  height: '400px',
+                  width: '90vw',
+                  height: '70vh',
                   overflowY: 'auto',
                 }}
               >
@@ -53,6 +62,12 @@ const DevTools = () => {
                   <TransferIO />
                   <ArNSRegistrySettings />
                   <NetworkSettings />
+                  <button
+                    onClick={() => setShowTanstackTools(true)}
+                    className="border border-white rounded text-white p-2"
+                  >
+                    Enable Tanstack Query Tools
+                  </button>
                 </div>
               </div>
             }
@@ -61,6 +76,15 @@ const DevTools = () => {
             cancelText={'Close Devtools'}
           />
         </div>
+      )}
+      {showTanstackTools && (
+        <Suspense fallback={null}>
+          <ReactQueryDevtoolsProduction
+            onClose={() => {
+              setShowTanstackTools(false);
+            }}
+          />
+        </Suspense>
       )}
     </>
   );

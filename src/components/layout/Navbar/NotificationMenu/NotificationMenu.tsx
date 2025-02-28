@@ -1,6 +1,6 @@
 import { AoANTHandler, AoANTState, AoArNSNameData } from '@ar.io/sdk';
 import { Tooltip } from '@src/components/data-display';
-import { useArNSState, useWalletState } from '@src/state';
+import { ANTProcessData, useArNSState, useWalletState } from '@src/state';
 import { getAntsRequiringUpdate } from '@src/utils';
 import { MILLISECONDS_IN_GRACE_PERIOD } from '@src/utils/constants';
 import { BellIcon, Circle, CircleAlert, Settings } from 'lucide-react';
@@ -54,10 +54,7 @@ export function createUpdateAntsNotification({
   ants,
   userAddress,
 }: {
-  ants: Record<
-    string,
-    { state: AoANTState | null; handlers: AoANTHandler[] | null }
-  >;
+  ants: Record<string, ANTProcessData>;
   userAddress: string;
 }): Notification | undefined {
   const antsRequiringUpdate = getAntsRequiringUpdate({

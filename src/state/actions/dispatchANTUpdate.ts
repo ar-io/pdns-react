@@ -44,15 +44,22 @@ export async function dispatchANTUpdate({
           state: null,
           handlers: null,
           errors: [],
+          processMeta: null,
         },
       },
     });
+
+    const gateway = aoNetwork.ANT.GRAPHQL_URL.replace(
+      /^(https?:\/\/)?graphql(\/)?/,
+      '',
+    );
 
     const domainInfo = await queryClient
       .fetchQuery(
         buildDomainInfoQuery({
           antId: processId,
           aoNetwork,
+          gateway,
         }),
       )
       .catch((e) => console.error(e));
@@ -66,6 +73,7 @@ export async function dispatchANTUpdate({
             | AoANTHandler[]
             | null,
           errors: domainInfo.errors ?? [],
+          processMeta: domainInfo.processMeta,
         },
       },
     });

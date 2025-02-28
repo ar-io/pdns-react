@@ -56,7 +56,8 @@ export function ReturnNameModal({
         },
         processId,
         workflowName: ANT_INTERACTION_TYPES.RELEASE_NAME,
-        dispatch: dispatchTransactionState,
+        dispatchTransactionState,
+        dispatchArNSState,
         owner: walletAddress.toString(),
         ao: antAoClient,
       });

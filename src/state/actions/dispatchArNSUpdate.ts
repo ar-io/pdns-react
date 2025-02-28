@@ -11,16 +11,18 @@ import {
 import { connect } from '@permaweb/aoconnect';
 import { captureException } from '@sentry/react';
 import { buildDomainInfoQuery } from '@src/hooks/useDomainInfo';
+import { buildAllGraphQLTransactionsQuery } from '@src/hooks/useGraphQL';
 import { AoAddress } from '@src/types';
 import { NETWORK_DEFAULTS } from '@src/utils/constants';
 import eventEmitter from '@src/utils/events';
 import { queryClient } from '@src/utils/network';
+import { TransactionEdge } from 'arweave-graphql';
 import { pLimit } from 'plimit-lit';
 import { Dispatch } from 'react';
 
+import { ANTProcessData } from '../contexts';
 import { ArNSAction } from '../reducers/ArNSReducer';
 
-// TODO: pass in network config instead of separate AoClients
 export async function dispatchArNSUpdate({
   dispatch,
   walletAddress,
@@ -33,6 +35,10 @@ export async function dispatchArNSUpdate({
   aoNetworkSettings: typeof NETWORK_DEFAULTS.AO;
 }) {
   try {
+    const gateway = aoNetworkSettings.ANT.GRAPHQL_URL.replace(
+      /^(https?:\/\/)?graphql(\/)?/,
+      '',
+    );
     const ao = connect(aoNetworkSettings.ARIO);
     const throttle = pLimit(20);
     // reset queries
@@ -85,6 +91,26 @@ export async function dispatchArNSUpdate({
       new Set(Object.values(userDomains).map((record) => record.processId)),
     );
 
+    // Fetch ANT Process meta from graphql
+    const antMetas = (await queryClient
+      .fetchQuery<TransactionEdge['node'][] | null>(
+        buildAllGraphQLTransactionsQuery(registeredUserAnts, gateway) as any,
+      )
+      .then((res) =>
+        res?.reduce(
+          (
+            acc: Record<string, TransactionEdge['node']>,
+            node: TransactionEdge['node'],
+          ) => {
+            if (!node) return acc;
+
+            acc[node.id] = node;
+            return acc;
+          },
+          {},
+        ),
+      )) as any as Record<string, TransactionEdge['node']>;
+
     dispatch({
       type: 'setDomains',
       payload: userDomains,
@@ -93,9 +119,13 @@ export async function dispatchArNSUpdate({
     // we set the default states to null so that they can match up in the tables
     dispatch({
       type: 'setAnts',
-      payload: [...flatAntIds].reduce(
-        (acc: Record<string, { state: null; handlers: null }>, id: string) => {
-          acc[id] = { state: null, handlers: null };
+      payload: registeredUserAnts.reduce(
+        (acc: Record<string, ANTProcessData>, id: string) => {
+          acc[id] = {
+            state: null,
+            handlers: null,
+            processMeta: antMetas?.[id] ?? null,
+          };
           return acc;
         },
         {},
@@ -109,6 +139,7 @@ export async function dispatchArNSUpdate({
           buildDomainInfoQuery({
             antId: id,
             aoNetwork: aoNetworkSettings,
+            gateway,
           }),
         );
         dispatch({
@@ -119,6 +150,7 @@ export async function dispatchArNSUpdate({
               handlers: (domainInfo.info?.Handlers ??
                 domainInfo.info?.HandlerNames ??
                 null) as AoANTHandler[] | null,
+              processMeta: antMetas[id] ?? null,
               errors: domainInfo.errors ?? [],
             },
           },

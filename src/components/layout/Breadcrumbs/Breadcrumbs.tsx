@@ -24,7 +24,7 @@ export type NavItem = {
 export const ANT_FLAG = 'ant-flag';
 
 function Breadcrumbs() {
-  const [{ aoNetwork }] = useGlobalState();
+  const [{ aoNetwork, gateway }] = useGlobalState();
   const queryClient = useQueryClient();
   const location = useLocation();
   const path = location.pathname.split('/');
@@ -63,6 +63,7 @@ function Breadcrumbs() {
           buildDomainInfoQuery({
             antId: processId,
             aoNetwork,
+            gateway,
           }),
         );
         const name = domainInfo?.name;

@@ -8,6 +8,7 @@ import ConfirmTransactionModal from '@src/components/modals/ConfirmTransactionMo
 import { usePrimaryName } from '@src/hooks/usePrimaryName';
 import { ArweaveTransactionID } from '@src/services/arweave/ArweaveTransactionID';
 import {
+  useArNSState,
   useGlobalState,
   useModalState,
   useTransactionState,
@@ -61,6 +62,7 @@ const UndernamesSubtable = ({
     ? state?.Owner === walletAddress.toString()
     : false;
   const [, dispatchTransactionState] = useTransactionState();
+  const [, dispatchArNSState] = useArNSState();
   const [, dispatchModalState] = useModalState();
   const { data: primaryNameData } = usePrimaryName();
   const [tableData, setTableData] = useState<Array<TableData>>([]);
@@ -294,7 +296,8 @@ const UndernamesSubtable = ({
               workflowName: ANT_INTERACTION_TYPES.EDIT_RECORD,
               signer: wallet.contractSigner!,
               owner: walletAddress.toString(),
-              dispatch: dispatchTransactionState,
+              dispatchTransactionState,
+              dispatchArNSState,
               ao: antAoClient,
             }).then(() => {
               eventEmitter.emit('success', {

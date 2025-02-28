@@ -1,5 +1,5 @@
 import { Tooltip } from '@src/components/data-display';
-import UpgradeAntModal from '@src/components/modals/ant-management/UpgradeAntModal/UpgradeAntModal';
+import UpgradeDomainModal from '@src/components/modals/ant-management/UpgradeDomainModal/UpgradeDomainModal';
 import { CircleCheck, CircleX } from 'lucide-react';
 import { useState } from 'react';
 
@@ -8,15 +8,13 @@ import DomainSettingsRow from './DomainSettingsRow';
 export default function IOCompatibleRow({
   editable,
   domain,
-  antId,
   requiresUpdate,
 }: {
   domain?: string;
-  antId?: string;
   requiresUpdate: boolean;
   editable: boolean;
 }) {
-  const [showUpgradeAntModal, setShowUpgradeAntModal] = useState(false);
+  const [showUpgradeDomainModal, setShowUpgradeDomainModal] = useState(false);
   return (
     <>
       <DomainSettingsRow
@@ -39,7 +37,7 @@ export default function IOCompatibleRow({
               message={'Your ANT requires an update'}
               icon={
                 <button
-                  onClick={() => setShowUpgradeAntModal(true)}
+                  onClick={() => setShowUpgradeDomainModal(true)}
                   className="p-[6px] px-[10px] text-[12px] rounded-[4px] bg-primary-thin hover:bg-primary border hover:border-primary border-primary-thin text-primary hover:text-black transition-all whitespace-nowrap"
                 >
                   Upgrade ANT
@@ -49,12 +47,11 @@ export default function IOCompatibleRow({
           ]
         }
       />
-      {antId && (
-        <UpgradeAntModal
+      {domain && (
+        <UpgradeDomainModal
           domain={domain}
-          antId={antId}
-          visible={showUpgradeAntModal}
-          setVisible={(b: boolean) => setShowUpgradeAntModal(b)}
+          visible={showUpgradeDomainModal}
+          setVisible={(b: boolean) => setShowUpgradeDomainModal(b)}
         />
       )}
     </>
