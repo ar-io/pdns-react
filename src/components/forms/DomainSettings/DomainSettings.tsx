@@ -9,7 +9,7 @@ import { ReturnNameModal } from '@src/components/modals/ant-management/ReturnNam
 import useDomainInfo from '@src/hooks/useDomainInfo';
 import { usePrimaryName } from '@src/hooks/usePrimaryName';
 import { ArweaveTransactionID } from '@src/services/arweave/ArweaveTransactionID';
-import { useGlobalState } from '@src/state';
+import { useArNSState, useGlobalState } from '@src/state';
 import dispatchANTInteraction from '@src/state/actions/dispatchANTInteraction';
 import { useTransactionState } from '@src/state/contexts/TransactionState';
 import { useWalletState } from '@src/state/contexts/WalletState';
@@ -77,7 +77,9 @@ function DomainSettings({
   const navigate = useNavigate();
 
   const [{ arioProcessId, antAoClient }] = useGlobalState();
-  const [{ interactionResult }, dispatch] = useTransactionState();
+  const [{ interactionResult }, dispatchTransactionState] =
+    useTransactionState();
+  const [, dispatchArNSState] = useArNSState();
   const [{ wallet, walletAddress }] = useWalletState();
   const { data: primaryNameData } = usePrimaryName();
   const { data, isLoading, refetch } = useDomainInfo({ domain, antId });
@@ -262,7 +264,6 @@ function DomainSettings({
           [DomainSettingsRowTypes.IO_COMPATIBLE]: (
             <IOCompatibleRow
               domain={domain}
-              antId={data?.processId?.toString()}
               editable={data?.state ? isAuthorized : true}
               requiresUpdate={
                 data?.processId && data?.state && walletAddress
@@ -271,6 +272,7 @@ function DomainSettings({
                         [data.processId]: {
                           state: data.state,
                           handlers: antHandlers,
+                          processMeta: data.processMeta,
                         },
                       },
                       userAddress: walletAddress.toString(),
@@ -293,7 +295,8 @@ function DomainSettings({
                   processId: data!.processId,
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -355,7 +358,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -373,7 +377,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -400,7 +405,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -429,7 +435,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -450,7 +457,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -481,7 +489,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -501,7 +510,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }
@@ -521,7 +531,8 @@ function DomainSettings({
                   signer: wallet!.contractSigner!,
                   owner: walletAddress!.toString(),
                   processId: data!.processId,
-                  dispatch,
+                  dispatchTransactionState,
+                  dispatchArNSState,
                   ao: antAoClient,
                 })
               }

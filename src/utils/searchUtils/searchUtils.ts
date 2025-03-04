@@ -1,4 +1,5 @@
-import { AntHandlerNames, AoANTHandler, AoANTState } from '@ar.io/sdk';
+import { AOS_MODULE_ID as ANT_MODULE_ID } from '@ar.io/sdk';
+import { ANTProcessData } from '@src/state';
 import emojiRegex from 'emoji-regex';
 import { asciiToUnicode, unicodeToAscii } from 'puny-coder';
 
@@ -133,17 +134,19 @@ export function getAntsRequiringUpdate({
   ants,
   userAddress,
 }: {
-  ants: Record<
-    string,
-    { state: AoANTState | null; handlers: AoANTHandler[] | null }
-  >;
+  ants: Record<string, ANTProcessData>;
   userAddress: string;
 }): string[] {
   return Object.entries(ants)
     .map(([id, ant]) => {
       // if user is not the owner, skip
       if (!ant.state?.Owner || ant?.state.Owner !== userAddress) return;
-      if (!AntHandlerNames.every((handler) => ant.handlers?.includes(handler)))
+      if (
+        !ant.processMeta ||
+        ant.processMeta.tags.find(
+          (t) => t.name === 'Module' && t.value !== ANT_MODULE_ID,
+        )
+      )
         return id;
     })
     .filter((id) => id !== undefined) as string[];
@@ -153,10 +156,7 @@ export function doAntsRequireUpdate({
   ants,
   userAddress,
 }: {
-  ants: Record<
-    string,
-    { state: AoANTState | null; handlers: AoANTHandler[] | null }
-  >;
+  ants: Record<string, ANTProcessData>;
   userAddress: string;
 }) {
   const antReq = getAntsRequiringUpdate({ ants, userAddress }).length > 0;

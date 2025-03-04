@@ -196,7 +196,8 @@ function PrimaryNameModal({
               arioProcessId: transactionPayload.arioProcessId,
               names: [encodePrimaryName(targetName)],
             },
-            dispatch: dispatchTransactionState,
+            dispatchTransactionState,
+            dispatchArNSState,
             ao: aoClient,
           });
           queryClient.resetQueries({

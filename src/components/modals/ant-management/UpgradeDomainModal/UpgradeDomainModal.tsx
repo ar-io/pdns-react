@@ -1,14 +1,26 @@
-import { ContractSigner, createAoSigner, evolveANT } from '@ar.io/sdk/web';
+import {
+  AOS_MODULE_ID as ANT_MODULE_ID,
+  ContractSigner,
+  SpawnANTState,
+  createAoSigner,
+} from '@ar.io/sdk/web';
 import AntChangelog from '@src/components/cards/AntChangelog';
 import { Tooltip } from '@src/components/data-display';
 import { CloseIcon } from '@src/components/icons';
 import ArweaveID, {
   ArweaveIdTypes,
 } from '@src/components/layout/ArweaveID/ArweaveID';
+import { buildDomainInfoQuery } from '@src/hooks/useDomainInfo';
 import { ArweaveTransactionID } from '@src/services/arweave/ArweaveTransactionID';
-import { useArNSState, useGlobalState, useWalletState } from '@src/state';
-import { dispatchANTUpdate } from '@src/state/actions/dispatchANTUpdate';
-import { formatForMaxCharCount, sleep } from '@src/utils';
+import {
+  useArNSState,
+  useGlobalState,
+  useTransactionState,
+  useWalletState,
+} from '@src/state';
+import dispatchANTInteraction from '@src/state/actions/dispatchANTInteraction';
+import { ANT_INTERACTION_TYPES } from '@src/types';
+import { formatForMaxCharCount, lowerCaseDomain, sleep } from '@src/utils';
 import { DEFAULT_ANT_LUA_ID } from '@src/utils/constants';
 import eventEmitter from '@src/utils/events';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,23 +31,24 @@ import { useState } from 'react';
 import arioLoading from '../../../icons/ario-spinner.json';
 import './styles.css';
 
-function UpgradeAntModal({
+function UpgradeDomainModal({
   visible,
   setVisible,
   domain,
-  antId,
 }: {
   visible: boolean;
   setVisible: (visible: boolean) => void;
-  domain?: string;
-  antId: string;
+  domain: string;
 }) {
   const queryClient = useQueryClient();
-  const [{ aoClient, aoNetwork }] = useGlobalState();
+  const [{ antAoClient, aoNetwork, arioContract, arioProcessId }] =
+    useGlobalState();
   const [, dispatchArNSState] = useArNSState();
   const [{ wallet, walletAddress }] = useWalletState();
+  const [, dispatchTransactionState] = useTransactionState();
   const [accepted, setAccepted] = useState(false);
   const [upgrading, setUpgrading] = useState(false);
+  const [signingMessage, setSigningMessage] = useState('');
 
   function handleClose() {
     setVisible(false);
@@ -43,66 +56,77 @@ function UpgradeAntModal({
     setUpgrading(false);
   }
 
-  async function upgradeAnts() {
+  async function upgradeDomain() {
     try {
       if (!wallet?.contractSigner || !walletAddress) {
         throw new Error('No Wander Signer found');
       }
-
       setUpgrading(true);
-
       const signer = createAoSigner(wallet?.contractSigner as ContractSigner);
-      // deliberately not using concurrency here for UX reasons
       const failedUpgrades = [];
+      const domainData = await queryClient.fetchQuery(
+        buildDomainInfoQuery({
+          domain,
+          arioContract,
+          arioProcessId,
+          aoNetwork,
+          wallet,
+        }),
+      );
+      const previousState: SpawnANTState = {
+        controllers: domainData.controllers,
+        records: domainData.records,
+        owner: walletAddress.toString(),
+        ticker: domainData.ticker,
+        name: domainData.name,
+        description: domainData.state?.Description ?? '',
+        keywords: domainData.state?.Keywords ?? [],
+        balances: domainData.state?.Balances ?? {},
+      };
 
-      await evolveANT({
-        processId: antId,
-        luaCodeTxId: DEFAULT_ANT_LUA_ID,
-        signer,
-        ao: aoClient,
-      }).catch(() => {
-        failedUpgrades.push(antId);
-      });
-      dispatchArNSState({
-        type: 'addAnts',
+      await dispatchANTInteraction({
         payload: {
-          [antId]: {
-            state: null,
-            handlers: null,
-            errors: [],
-          },
+          arioProcessId,
+          state: previousState,
+          name: lowerCaseDomain(domain),
         },
-      });
-
-      dispatchANTUpdate({
-        processId: antId,
-        queryClient,
-        walletAddress,
-        dispatch: dispatchArNSState,
-        aoNetwork,
+        workflowName: ANT_INTERACTION_TYPES.UPGRADE_ANT,
+        processId: domainData.processId,
+        owner: walletAddress.toString(),
+        ao: antAoClient,
+        signer,
+        dispatchTransactionState,
+        dispatchArNSState,
+        stepCallback: async (step?: string | Record<string, string>) => {
+          if (typeof step === 'string') {
+            setSigningMessage(`${step}`);
+          }
+        },
+      }).catch(() => {
+        failedUpgrades.push(domainData.processId);
       });
 
       if (failedUpgrades.length) {
         eventEmitter.emit('error', {
           name: 'Upgrade Error',
-          message: `Issue upgrading ANT ${antId}, please try again later`,
+          message: `Issue upgrading ${domain}, please try again later`,
         });
       } else {
         eventEmitter.emit('success', {
           message: (
             <div>
               <span>
-                Updated ANT to source code{' '}
+                Updated Domain to Module{' '}
                 <ArweaveID
                   characterCount={8}
                   shouldLink={true}
                   type={ArweaveIdTypes.TRANSACTION}
-                  id={new ArweaveTransactionID(DEFAULT_ANT_LUA_ID)}
+                  id={new ArweaveTransactionID(ANT_MODULE_ID)}
                 />
               </span>
             </div>
           ),
-          name: `ANT successfully updated!`,
+          name: `Domain successfully updated!`,
         });
       }
       // slight delay for UX so the stage is visible on shorter updates
@@ -110,7 +134,6 @@ function UpgradeAntModal({
     } catch (error) {
       eventEmitter.emit('error', error);
     } finally {
-      queryClient.resetQueries({ queryKey: ['domainInfo', domain] });
       handleClose();
     }
   }
@@ -125,7 +148,7 @@ function UpgradeAntModal({
             className="flex flex-row text-xl text-white"
             style={{ gap: '10px' }}
           >
-            Upgrade ANT
+            {signingMessage.length ? <>{signingMessage}</> : 'Upgrade Domain'}
           </h1>
           <button
             disabled={upgrading}
@@ -156,8 +179,9 @@ function UpgradeAntModal({
                   message={
                     <div className="flex flex-col">
                       <span>
-                        This will conduct an &apos;Eval&apos; Action on your ANT
-                        process to upgrade the code to the latest version
+                        This will conduct an &apos;Reassign&apos; Action on your
+                        ANT process to fork the ant to and upgraded version with
+                        the latest ANT Module ID
                       </span>
                       <span className="pt-2 text-primary">
                         View the code:{' '}
@@ -189,7 +213,7 @@ function UpgradeAntModal({
         {/* footer */}
         <div>
           <button
-            disabled={!accepted}
+            disabled={!accepted || upgrading}
             className={`${
               !accepted
                 ? 'bg-background text-grey'
@@ -199,7 +223,7 @@ function UpgradeAntModal({
                       : 'bg-link text-white hover:bg-primary hover:text-black'
                   } `
             } w-full rounded-b-lg p-4 text-sm transition-all`}
-            onClick={() => upgradeAnts()}
+            onClick={() => upgradeDomain()}
           >
             {!accepted
               ? 'Verify you understand before proceeding'
@@ -213,4 +237,4 @@ function UpgradeAntModal({
   );
 }
 
-export default UpgradeAntModal;
+export default UpgradeDomainModal;

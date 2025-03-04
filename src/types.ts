@@ -188,6 +188,7 @@ export enum ANT_INTERACTION_TYPES {
   SET_LOGO = 'Set Logo',
   SET_DESCRIPTION = 'Set Description',
   SET_KEYWORDS = 'Set Keywords',
+  UPGRADE_ANT = 'Upgrade ANT',
 }
 
 export enum ARNS_INTERACTION_TYPES {
