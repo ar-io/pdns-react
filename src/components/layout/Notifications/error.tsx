@@ -28,7 +28,7 @@ export const defaultError = ({
     >
       {title}
       <button
-        className="button center pointer"
+        className="button center cursor-pointer"
         onClick={() => closeCallback()}
         style={{ padding: '0px' }}
       >

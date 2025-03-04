@@ -53,7 +53,9 @@ function DialogModal({
         >
           <span
             className={
-              showClose ? 'text faded center' : 'text-large white bold center'
+              showClose
+                ? 'text faded center'
+                : 'text-large white font-bold center'
             }
           >
             {title}

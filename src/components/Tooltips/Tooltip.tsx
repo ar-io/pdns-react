@@ -21,7 +21,7 @@ function Tooltip({
       <AntdTooltip
         title={message}
         color="var(--box-color)"
-        className="pointer"
+        className="cursor-pointer"
         overlayInnerStyle={{ padding: '15px' }}
         {...tooltipOverrides}
         destroyTooltipOnHide={true}

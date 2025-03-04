@@ -401,7 +401,7 @@ function NameTokenSelector({
         />
         <span
           className={`flex flex-row text grey flex-center ${
-            selectedToken ? 'bold' : ''
+            selectedToken ? 'font-bold' : ''
           } hover`}
           style={{
             width: 'fit-content',
@@ -417,7 +417,7 @@ function NameTokenSelector({
             isArweaveTransactionID(searchText) &&
             !Object.keys(tokens ?? []).includes(searchText) ? (
             <button
-              className="outline-button flex flex-row center pointer"
+              className="outline-button flex flex-row center cursor-pointer"
               style={{
                 borderRadius: '50px',
                 width: 'fit-content',
@@ -436,7 +436,7 @@ function NameTokenSelector({
             </button>
           ) : selectedToken ? (
             <button
-              className="outline-button flex flex-row center pointer"
+              className="outline-button flex flex-row center cursor-pointer"
               style={{
                 gap: '3px',
                 borderRadius: '50px',
@@ -499,7 +499,7 @@ function NameTokenSelector({
                 return (
                   <button
                     key={index}
-                    className="name-token-item pointer"
+                    className="name-token-item cursor-pointer"
                     onClick={() => {
                       handleSetToken({
                         id: token.id,
@@ -561,7 +561,7 @@ function NameTokenSelector({
                 return (
                   <button
                     key={index}
-                    className="name-token-item pointer"
+                    className="name-token-item cursor-pointer"
                     onClick={() => {
                       handleSetToken({
                         id,

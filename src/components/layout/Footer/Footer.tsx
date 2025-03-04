@@ -72,7 +72,7 @@ function Footer() {
           color="var(--text-faded)"
         >
           <button
-            className="button grey text center hover pointer"
+            className="button grey text center hover cursor-pointer"
             onClick={() => window.open('https://github.com/ar-io/', '_blank')}
           >
             <FaGithub className="size-4 stroke-grey fill-grey hover:stroke-white hover:fill-white" />
@@ -85,7 +85,7 @@ function Footer() {
           color="var(--text-faded)"
         >
           <button
-            className="button grey text center hover pointer"
+            className="button grey text center hover cursor-pointer"
             onClick={() => window.open(ARIO_DISCORD_LINK, '_blank')}
           >
             <FaDiscord className="size-4 stroke-grey fill-grey hover:stroke-white hover:fill-white" />
@@ -98,7 +98,7 @@ function Footer() {
           color="var(--text-faded)"
         >
           <button
-            className="button grey text center hover pointer hover:text-white"
+            className="button grey text center hover cursor-pointer hover:text-white"
             onClick={() => window.open('https://docs.ar.io/arns', '_blank')}
           >
             <QuestionCircleOutlined className="text-base" />

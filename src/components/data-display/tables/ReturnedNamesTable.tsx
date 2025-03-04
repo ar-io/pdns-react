@@ -439,7 +439,10 @@ const ReturnedNamesTable = ({
             ) : (
               <div className="flex flex-column center p-[100px]">
                 <>
-                  <span className="white bold" style={{ fontSize: '16px' }}>
+                  <span
+                    className="white font-bold"
+                    style={{ fontSize: '16px' }}
+                  >
                     No Returned Names Found
                   </span>
                 </>

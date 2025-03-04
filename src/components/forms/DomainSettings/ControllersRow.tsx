@@ -115,7 +115,7 @@ export default function ControllersRow({
             title={
               <div className="flex-column flex" style={{ gap: '10px' }}>
                 <button
-                  className="flex flex-right white pointer button"
+                  className="flex flex-right white cursor-pointer button"
                   onClick={() => {
                     setShowAddModal(true);
                     setShowTooltip(false);
@@ -124,7 +124,7 @@ export default function ControllersRow({
                   Add Controller
                 </button>
                 <button
-                  className="flex flex-right white pointer button"
+                  className="flex flex-right white cursor-pointer button"
                   onClick={() => {
                     setShowRemoveModal(true);
                     setShowTooltip(false);
@@ -139,7 +139,7 @@ export default function ControllersRow({
               width={'18px'}
               height={'18px'}
               fill="var(--text-grey)"
-              className="pointer"
+              className="cursor-pointer"
             />
           </Tooltip>,
         ]}

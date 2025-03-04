@@ -2,22 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@font-face {
-  font-family: 'Rubik';
-  src: url('../assets/fonts/Rubik1/Rubik-Regular.ttf');
-  font-weight: 100;
-  font-style: monospace;
-  font-display: block;
-}
-
-@font-face {
-  font-family: 'Rubik-Bold';
-  src: url('../assets/fonts/Rubik1/Rubik-Bold.ttf');
-  font-weight: 100;
-  font-style: monospace;
-  font-display: block;
-}
-
 @layer base {
   body {
     @apply bg-background;
@@ -81,7 +65,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--bg-color);
-  font-family: 'Rubik';
+
   margin: 0;
   box-sizing: border-box;
   height: 100%;
@@ -99,10 +83,6 @@ body {
   padding: 30px 100px;
 }
 
-b {
-  font-family: 'Rubik-Bold';
-}
-
 input[type='text']:disabled {
   padding-right: 40px;
   width: '100%';
@@ -116,11 +96,6 @@ input[type='number']:disabled:-webkit-inner-spin-button {
 
 input[type='number']:disabled {
   -moz-appearance: textfield;
-}
-
-.bold {
-  font-family: 'Rubik-Bold';
-  font-weight: 700;
 }
 
 .link {
@@ -140,10 +115,6 @@ a:hover {
 }
 a:active {
   text-decoration: none;
-}
-
-.pointer {
-  cursor: pointer;
 }
 
 .text {
@@ -315,7 +286,6 @@ a:active {
 
 .page-header {
   display: flex;
-  font-family: 'Rubik-Bold';
   font-style: normal;
   font-size: 60px;
   line-height: 60px;
@@ -330,7 +300,6 @@ a:active {
 .section-header {
   display: flex;
   flex-wrap: wrap;
-  font-family: 'Rubik-Bold';
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
@@ -347,7 +316,6 @@ a:active {
   height: 45px;
   width: 150px;
   border: 2px solid var(--text-white);
-  font-family: 'Rubik';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -361,7 +329,6 @@ a:active {
   height: 25px;
   min-width: 80px;
   border: 1px solid var(--text-faded);
-  font-family: 'Rubik-Bold';
   font-weight: 500;
   font-size: 10px;
   cursor: pointer;
@@ -380,7 +347,6 @@ a:active {
   height: 25px;
   min-width: 80px;
   border: 2px solid var(--text-white);
-  font-family: 'Rubik-Bold';
   font-weight: 500;
   font-size: 10px;
   cursor: pointer;
@@ -394,7 +360,6 @@ a:active {
 
 .button-link {
   border: none;
-  font-family: 'Rubik';
   font-size: 16px;
   font-weight: 500;
   text-decoration: underline;
@@ -408,7 +373,6 @@ a:active {
   align-self: flex-start;
   border-radius: var(--corner-radius);
   background-color: var(--text-white);
-  font-family: 'Rubik-Bold';
   padding: 5px 15px;
 }
 .info-bubble {
@@ -447,7 +411,6 @@ a:active {
   display: flex;
   padding: 15px;
   font-size: 16px;
-  font-family: 'Rubik';
   font-weight: 600;
   width: fit-content;
   height: fit-content;
@@ -461,7 +424,7 @@ a:active {
   display: flex;
   padding: 15px;
   font-size: 16px;
-  font-family: 'Rubik';
+
   font-weight: 500;
   width: fit-content;
   height: fit-content;
@@ -494,7 +457,7 @@ a:active {
   display: flex;
   padding: 15px 20px;
   font-size: 16px;
-  font-family: 'Rubik';
+
   font-weight: 800;
   min-width: 110px;
   width: fit-content;
@@ -528,7 +491,7 @@ a:active {
   border: 2px solid #e0e0e0;
   box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.25);
   border-radius: var(--corner-radius);
-  font-family: 'Rubik';
+
   font-weight: 500;
   font-size: 12px;
   outline: none;
@@ -549,7 +512,7 @@ a:active {
   border-right: none;
   box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.25);
   border-radius: var(--corner-radius);
-  font-family: 'Rubik-Bold';
+
   font-weight: 500;
   font-size: 12px;
   cursor: pointer;

@@ -88,7 +88,7 @@ function Manage() {
                     />
                   )}
                 <button
-                  className={'button center pointer'}
+                  className={'button center cursor-pointer'}
                   onClick={() =>
                     walletAddress
                       ? dispatchArNSUpdate({

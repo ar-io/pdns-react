@@ -63,7 +63,7 @@ function TransactionStatus({
 
   return (
     <span
-      className="text white bold"
+      className="text white font-bold"
       style={{ alignItems: 'center', ...wrapperStyle }}
     >
       <Tooltip

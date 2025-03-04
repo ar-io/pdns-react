@@ -168,7 +168,7 @@ function TransactionReview() {
 
         {typeof header === 'string' ? (
           <div
-            className="flex flex-row text-large white bold center"
+            className="flex flex-row text-large white font-bold center"
             style={{
               height: '100%',
               padding: '50px 0px',

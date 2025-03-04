@@ -40,10 +40,9 @@ function CopyTextButton({
   return (
     <div className="flex-row" style={{ position, ...wrapperStyle }}>
       <button
-        className="button flex justify-center"
+        className="button flex justify-center cursor-pointer"
         style={{
           ...wrapperStyle,
-          cursor: 'pointer',
           gap: '8px',
           padding: '0px',
         }}
@@ -72,9 +71,8 @@ function CopyTextButton({
           }}
         >
           <div
-            className="flex items-center justify-center"
+            className="flex items-center justify-center cursor-pointer"
             style={{
-              cursor: 'pointer',
               scale: size,
               overflow: 'visible',
               ...copyButtonStyle,
