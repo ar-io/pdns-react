@@ -44,6 +44,7 @@ export async function dispatchANTUpdate({
           state: null,
           handlers: null,
           errors: [],
+          processMeta: null,
         },
       },
     });
@@ -66,6 +67,7 @@ export async function dispatchANTUpdate({
             | AoANTHandler[]
             | null,
           errors: domainInfo.errors ?? [],
+          processMeta: domainInfo.processMeta,
         },
       },
     });

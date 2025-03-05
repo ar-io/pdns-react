@@ -1,5 +1,5 @@
 import PrimaryNameModal from '@src/components/modals/PrimaryNameModal/PrimaryNameModal';
-import UpgradeAntModal from '@src/components/modals/ant-management/UpgradeAntsModal/UpgradeAntsModal';
+import UpgradeDomainsModal from '@src/components/modals/ant-management/UpgradeDomainsModal/UpgradeDomainsModal';
 import { Dispatch, createContext, useContext, useReducer } from 'react';
 
 import { ModalAction } from '../reducers/ModalReducer';
@@ -42,7 +42,7 @@ export function ModalStateProvider({
   return (
     <ModalStateContext.Provider value={[modalStates, dispatchModalState]}>
       {children}
-      <UpgradeAntModal
+      <UpgradeDomainsModal
         visible={modalStates.showUpgradeAntModal}
         setVisible={(b) =>
           dispatchModalState({

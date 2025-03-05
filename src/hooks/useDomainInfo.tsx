@@ -24,7 +24,10 @@ import {
   queryClient,
 } from '@src/utils/network';
 import { useQuery } from '@tanstack/react-query';
+import { TransactionEdge } from 'arweave-graphql';
 import { Tag } from 'arweave/node/lib/transaction';
+
+import { buildGraphQLQuery } from './useGraphQL';
 
 export type DomainInfo = {
   info: AoANTInfo | null;
@@ -46,6 +49,7 @@ export type DomainInfo = {
   records: Record<string, AoANTRecord>;
   state: AoANTState | null;
   isInGracePeriod?: boolean;
+  processMeta: TransactionEdge['node'] | null;
   errors: Error[];
 };
 
@@ -174,6 +178,16 @@ export function buildDomainInfoQuery({
         staleTime: Infinity,
       });
 
+      const processMeta = await queryClient
+        .fetchQuery(
+          buildGraphQLQuery(aoNetwork.ANT.GRAPHQL_URL, { ids: [processId] }),
+        )
+        .then((res) => res?.transactions.edges[0].node)
+        .catch((e) => {
+          console.error(e);
+          return null;
+        });
+
       const associatedNames = arnsRecords
         ? Object.entries(arnsRecords)
             .filter(([, r]) => r.processId == processId.toString())
@@ -210,6 +224,7 @@ export function buildDomainInfoQuery({
         errors,
         // TODO: staletime for this hook can be configured around the endTimestamp on the record
         isInGracePeriod: record ? isInGracePeriod(record) : false,
+        processMeta,
       } as DomainInfo;
     },
     refetchOnWindowFocus: false,

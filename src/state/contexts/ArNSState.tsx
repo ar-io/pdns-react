@@ -6,6 +6,7 @@ import {
 } from '@ar.io/sdk/web';
 import { connect } from '@permaweb/aoconnect';
 import { NETWORK_DEFAULTS } from '@src/utils/constants';
+import { TransactionEdge } from 'arweave-graphql';
 import {
   Dispatch,
   createContext,
@@ -19,16 +20,16 @@ import { ArNSAction } from '../reducers/ArNSReducer';
 import { defaultArIO, useGlobalState } from './GlobalState';
 import { useWalletState } from './WalletState';
 
+export type ANTProcessData = {
+  state: AoANTState | null;
+  handlers: AoANTHandler[] | null;
+  processMeta: TransactionEdge['node'] | null;
+  errors?: Error[];
+};
+
 export type ArNSState = {
   domains: Record<string, AoArNSNameData>;
-  ants: Record<
-    string,
-    {
-      state: AoANTState | null;
-      handlers: AoANTHandler[] | null;
-      errors?: Error[];
-    }
-  >;
+  ants: Record<string, ANTProcessData>;
   loading: boolean;
   percentLoaded: number;
   antCount: number;

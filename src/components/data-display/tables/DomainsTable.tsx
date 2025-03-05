@@ -1,9 +1,4 @@
-import {
-  AoANTHandler,
-  AoANTState,
-  AoArNSNameData,
-  isLeasedArNSRecord,
-} from '@ar.io/sdk';
+import { AoANTHandler, AoArNSNameData, isLeasedArNSRecord } from '@ar.io/sdk';
 import ErrorsTip from '@src/components/Tooltips/ErrorsTip';
 import {
   ChevronRightIcon,
@@ -15,9 +10,10 @@ import { Loader } from '@src/components/layout';
 import ArweaveID, {
   ArweaveIdTypes,
 } from '@src/components/layout/ArweaveID/ArweaveID';
-import UpgradeAntModal from '@src/components/modals/ant-management/UpgradeAntModal/UpgradeAntModal';
+import UpgradeDomainModal from '@src/components/modals/ant-management/UpgradeDomainModal/UpgradeDomainModal';
 import { usePrimaryName } from '@src/hooks/usePrimaryName';
 import {
+  ANTProcessData,
   useArNSState,
   useGlobalState,
   useModalState,
@@ -115,14 +111,7 @@ const DomainsTable = ({
 }: {
   domainData: {
     names: Record<string, AoArNSNameData>;
-    ants: Record<
-      string,
-      {
-        state: AoANTState | null;
-        handlers: AoANTHandler[] | null;
-        errors?: Error[];
-      }
-    >;
+    ants: Record<string, ANTProcessData>;
   };
   loading: boolean;
   filter?: string;
@@ -140,9 +129,9 @@ const DomainsTable = ({
   const [filteredTableData, setFilteredTableData] = useState<TableData[]>([]);
   const [sortBy, setSortBy] = useState(searchParams.get('sortBy') ?? 'name');
 
-  const [showUpgradeAntModal, setShowUpgradeAntModal] =
+  const [showUpgradeDomainModal, setShowUpgradeDomainModal] =
     useState<boolean>(false);
-  const [antIdToUpgrade, setAntIdToUpgrade] = useState<string | undefined>(
+  const [domainToUpgrade, setDomainToUpgrade] = useState<string | undefined>(
     undefined,
   );
 
@@ -164,6 +153,7 @@ const DomainsTable = ({
                   [record.processId]: {
                     state: ant.state,
                     handlers: ant.handlers,
+                    processMeta: ant.processMeta,
                   },
                 },
                 userAddress: walletAddress.toString(),
@@ -383,8 +373,8 @@ const DomainsTable = ({
                 icon={
                   <button
                     onClick={() => {
-                      setAntIdToUpgrade(processId);
-                      setShowUpgradeAntModal(true);
+                      setDomainToUpgrade(lowerCaseDomain(row.original.name));
+                      setShowUpgradeDomainModal(true);
                     }}
                     className="p-[4px] px-[8px] text-[12px] rounded-[4px] bg-primary-thin hover:bg-primary border hover:border-primary border-primary-thin text-primary hover:text-black transition-all whitespace-nowrap"
                   >
@@ -674,13 +664,13 @@ const DomainsTable = ({
           }}
         />
       </div>
-      {antIdToUpgrade && (
-        <UpgradeAntModal
-          antId={antIdToUpgrade}
-          visible={showUpgradeAntModal}
+      {domainToUpgrade && (
+        <UpgradeDomainModal
+          domain={domainToUpgrade}
+          visible={showUpgradeDomainModal}
           setVisible={(b: boolean) => {
-            setShowUpgradeAntModal(b);
-            setAntIdToUpgrade(undefined);
+            setShowUpgradeDomainModal(b);
+            setDomainToUpgrade(undefined);
           }}
         />
       )}

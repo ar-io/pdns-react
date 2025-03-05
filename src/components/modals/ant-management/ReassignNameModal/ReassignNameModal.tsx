@@ -123,7 +123,8 @@ export function ReassignNameModal({
         },
         processId,
         workflowName: ANT_INTERACTION_TYPES.REASSIGN_NAME,
-        dispatch: dispatchTransactionState,
+        dispatchTransactionState,
+        dispatchArNSState,
         owner: walletAddress.toString(),
         ao: aoClient,
       });

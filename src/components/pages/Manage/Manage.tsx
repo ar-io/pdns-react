@@ -71,7 +71,7 @@ function Manage() {
                     userAddress: walletAddress.toString(),
                   }) && (
                     <Tooltip
-                      message={'Your ANTs require an update'}
+                      message={'Your Domains require an update'}
                       icon={
                         <button
                           onClick={() =>
@@ -82,7 +82,7 @@ function Manage() {
                           }
                           className="h-fit animate-pulse whitespace-nowrap rounded-[4px] bg-primary-thin px-4 py-1 text-sm text-primary transition-all hover:bg-primary hover:text-black"
                         >
-                          Upgrade ANTs
+                          Upgrade Domains
                         </button>
                       }
                     />
