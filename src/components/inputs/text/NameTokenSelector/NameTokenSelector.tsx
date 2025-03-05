@@ -1,5 +1,6 @@
 import { ANT, AOProcess, AoArNSNameData } from '@ar.io/sdk/web';
 import Tooltip from '@src/components/Tooltips/Tooltip';
+import { ARNS_APP_DB, getAoANTInfo } from '@src/utils/db';
 import { Pagination, PaginationProps } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 
@@ -120,18 +121,26 @@ function NameTokenSelector({
         ? await Promise.all(
             imports.map(async (id: ArweaveTransactionID) => {
               try {
-                const contract = ANT.init({
-                  process: new AOProcess({
-                    processId: id.toString(),
-                    ao: antAoClient,
-                  }),
-                });
+                // const contract = ANT.init({
+                //   process: new AOProcess({
+                //     processId: id.toString(),
+                //     ao: antAoClient,
+                //   }),
+                // });
 
-                const info = await contract.getInfo();
+                // const info = await contract.getInfo();
+
+                const info = await getAoANTInfo(
+                  ARNS_APP_DB,
+                  antAoClient,
+                  id.toString(),
+                  true,
+                );
 
                 // TODO: further validate that contract exists and has valid state
 
-                if (!contract || !info) {
+                // if (!contract || !info) {
+                if (!info) {
                   throw new Error('Unable to get contract');
                 }
 
