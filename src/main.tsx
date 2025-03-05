@@ -1,3 +1,5 @@
+import { Logger } from '@ar.io/sdk/web';
+import '@fontsource-variable/rubik';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from 'antd';
 import React from 'react';
@@ -25,6 +27,8 @@ import {
 import { queryClient } from './utils/network';
 // setup sentry
 import './utils/sentry';
+
+Logger.default.setLogLevel('none');
 
 // Wagmi setup
 const config = createConfig({

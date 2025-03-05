@@ -69,7 +69,7 @@ ul::before {
   justify-content: flex-start;
   background: var(--card-bg);
   border-radius: var(--corner-radius);
-  font-family: 'Rubik';
+
   font-weight: 500;
   font-size: 16px;
   outline: none;
@@ -87,7 +87,7 @@ ul::before {
   justify-content: flex-start;
   background: var(--card-bg);
   border-radius: var(--corner-radius);
-  font-family: 'Rubik';
+
   font-weight: 500;
   font-size: 16px;
   outline: none;

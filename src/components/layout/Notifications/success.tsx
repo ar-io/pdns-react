@@ -28,7 +28,7 @@ export const defaultSuccess = ({
     >
       {title}
       <button
-        className="button center pointer"
+        className="button center cursor-pointer"
         onClick={() => closeCallback()}
         style={{ padding: '0px' }}
       >
@@ -58,7 +58,6 @@ export const defaultSuccess = ({
   placement: 'bottomRight',
   duration: 30,
   style: {
-    fontFamily: 'Rubik',
     background: 'var(--card-bg)',
     color: 'var(--text-white)',
     boxShadow: 'var(--shadow)',

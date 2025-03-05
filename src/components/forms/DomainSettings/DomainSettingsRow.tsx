@@ -40,7 +40,7 @@ export default function DomainSettingsRow({
               <>
                 {!editing && setEditing ? (
                   <button
-                    className="button pointer hover"
+                    className="button cursor-pointer hover"
                     onClick={setEditing}
                     style={{ boxSizing: 'border-box' }}
                   >
@@ -64,7 +64,7 @@ export default function DomainSettingsRow({
                       }}
                     >
                       <button
-                        className="button bold grey pointer hover"
+                        className="button font-bold grey cursor-pointer hover"
                         style={{
                           padding: '3px 7px',
                           fontSize: '13px',

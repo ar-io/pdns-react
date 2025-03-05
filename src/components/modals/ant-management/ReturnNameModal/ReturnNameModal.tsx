@@ -131,7 +131,9 @@ export function ReturnNameModal({
                   <span>
                     Be sure that you no longer need this name or its associated
                     features before proceeding.{' '}
-                    <span className="bold">This action is irreversible.</span>
+                    <span className="font-bold">
+                      This action is irreversible.
+                    </span>
                   </span>
                 </div>
               }

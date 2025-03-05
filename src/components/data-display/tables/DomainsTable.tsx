@@ -605,7 +605,10 @@ const DomainsTable = ({
             ) : (
               <div className="flex flex-column center p-[100px]">
                 <>
-                  <span className="white bold" style={{ fontSize: '16px' }}>
+                  <span
+                    className="white font-bold"
+                    style={{ fontSize: '16px' }}
+                  >
                     No Registered Names Found
                   </span>
                   <span className={'grey text-sm max-w-[400px]'}>

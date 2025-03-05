@@ -250,7 +250,7 @@ function RegisterNameForm() {
               style={{ gap: '25px' }}
             >
               <button
-                className="flex flex-row center text-medium bold pointer"
+                className="flex flex-row center text-medium font-bold cursor-pointer"
                 onClick={() =>
                   dispatchRegisterState({
                     type: 'setRegistrationType',
@@ -291,7 +291,7 @@ function RegisterNameForm() {
                 )}
               </button>
               <button
-                className="flex flex-row center text-medium bold pointer"
+                className="flex flex-row center text-medium font-bold cursor-pointer"
                 style={{
                   position: 'relative',
                   background:

@@ -5,7 +5,7 @@
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  font-family: 'Rubik';
+
   font-weight: 500;
   font-size: 16px;
   color: var(--text-grey);
@@ -24,7 +24,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-title {
   color: var(--text-white) !important;
-  font-family: 'Rubik';
+
   font-weight: 400;
   font-size: 16px;
 }
@@ -33,7 +33,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-description {
   color: var(--text-grey) !important;
-  font-family: 'Rubik';
+
   font-weight: 400;
   font-size: 13px;
 }
@@ -49,7 +49,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-title {
   color: var(--text-white) !important;
-  font-family: 'Rubik';
+
   font-weight: 400;
   font-size: 16px;
 }
@@ -58,7 +58,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-description {
   color: var(--text-white) !important;
-  font-family: 'Rubik';
+
   font-weight: 400;
   font-size: 13px;
 }
@@ -74,7 +74,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-title {
   color: var(--text-grey) !important;
-  font-family: 'Rubik';
+
   font-weight: 400;
   font-size: 16px;
 }
@@ -83,7 +83,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-description {
   color: var(--text-grey) !important;
-  font-family: 'Rubik';
+
   font-weight: 400;
   font-size: 13px;
 }

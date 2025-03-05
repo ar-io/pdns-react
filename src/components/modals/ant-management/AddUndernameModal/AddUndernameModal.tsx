@@ -199,7 +199,7 @@ function AddUndernameModal({
                             placement="top"
                             showArrow={true}
                           >
-                            <span className="underline bold">
+                            <span className="underline font-bold">
                               {
                                 getIncompatibleNames(
                                   undername,

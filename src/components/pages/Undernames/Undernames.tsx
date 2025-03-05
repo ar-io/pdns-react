@@ -95,7 +95,6 @@ function Undernames() {
                       gap: '8px',
                       fontSize: '14px',
                       color: 'var(--accent)',
-                      fontFamily: 'Rubik',
                     }}
                     onClick={() =>
                       navigate(

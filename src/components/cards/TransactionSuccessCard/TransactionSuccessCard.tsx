@@ -47,7 +47,7 @@ function TransactionSuccessCard({
         />
       </div>
       {close ? (
-        <button className="button flex center pointer" onClick={close}>
+        <button className="button flex center cursor-pointer" onClick={close}>
           <CloseIcon width={'20px'} height={'20px'} fill="white" />
         </button>
       ) : (

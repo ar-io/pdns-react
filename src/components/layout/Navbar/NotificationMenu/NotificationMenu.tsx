@@ -40,7 +40,7 @@ export function createExpirationNotification(
     type: 'warning',
     message: (
       <span className="w-full">
-        <span className="text-bold">{domainsExpiring}</span> names are about to
+        <span className="font-bold">{domainsExpiring}</span> names are about to
         expire.
       </span>
     ),
@@ -68,7 +68,7 @@ export function createUpdateAntsNotification({
     type: 'warning',
     message: (
       <span className="w-full">
-        <span className="text-bold">{antsRequiringUpdate}</span>{' '}
+        <span className="font-bold">{antsRequiringUpdate}</span>{' '}
         {antsRequiringUpdate > 1 ? 'ANTs need updating' : ' ANT needs updating'}
       </span>
     ),
@@ -105,7 +105,7 @@ export function createNamesExceedingUndernameLimitNotification({
     type: 'warning',
     message: (
       <span className="w-full">
-        <span className="text-bold">
+        <span className="font-bold">
           {domainsRequiringUndernameSupportUpgrade}
         </span>{' '}
         names have exceeded their under_name capacity.

@@ -352,10 +352,9 @@ function NavMenuCard() {
                   </span>
                   {
                     <button
-                      className="navbar-link hover flex-row"
+                      className="navbar-link hover flex-row cursor-pointer"
                       onClick={() => logout()}
                       style={{
-                        cursor: 'pointer',
                         padding: '0px',
                         gap: '10px',
                         fontSize: '14px',

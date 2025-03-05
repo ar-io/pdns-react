@@ -29,7 +29,7 @@ function ErrorsTip({
           </div>
         }
         color="var(--box-color)"
-        className="pointer"
+        className="cursor-pointer"
         overlayInnerStyle={{ padding: '15px', width: 'fit-content' }}
         {...tooltipOverrides}
         destroyTooltipOnHide={true}
